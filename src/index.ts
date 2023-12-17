@@ -94,15 +94,14 @@ let isQuizAnswered = false;
 
 async function main() {
   try {
-    const assistant = await openai.beta.assistants.retrieve(process.env.ASSISTANT_ID || "");
+    const assistant = await openai.beta.assistants.retrieve(
+      process.env.ASSISTANT_ID || ""
+    );
 
     // Log the first greeting
     console.log(
       "\nHola, soy tu asistente personal para ayudarte a pasar el examen de admisión a la universidad.\n"
     );
-
-    // Create a thread
-    const thread = await openai.beta.threads.create();
 
     // Use keepAsking as state for keep asking questions
     let keepAsking = true;
@@ -114,14 +113,30 @@ async function main() {
         qn.questions[0].choices,
         qn.context
       );
+
+      console.log(`Contexto: \n ${context} \n`);
+
+      const helpOptChosen = await askRLineQuestion(`
+      Elige usando los números la ayuda que necesitas: \n
+      ${formattedHelpPrompts.join("")}`);
+      const chosenOpt = parseInt(helpOptChosen, 10);
+
+      if (chosenOpt < 1 || chosenOpt > formattedHelpPrompts.length) {
+        console.log("Opción inválida - sólo usa números por favor: \n");
+        continue;
+      }
+
       const userQuestion = isQuizAnswered
         ? await askRLineQuestion("You next question to the model: \n")
         : // this will make the model  build a quiz using our provided function
           await askRLineQuestion(
-            `El quiz: \n${context}\n
-            Elige la ayuda que necesitas: \n
-            ${formattedHelpPrompts.join("")}`
+            `Contexto: \n ${context} \n
+            ${formattedHelpPrompts[chosenOpt - 1]} \n
+            `
           );
+
+      // Create a thread
+      const thread = await openai.beta.threads.create();
 
       // Pass in the user question into the existing thread
       await openai.beta.threads.messages.create(thread.id, {
