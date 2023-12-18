@@ -127,13 +127,11 @@ async function main() {
       }
 
       const userQuestion = isQuizAnswered
-        ? await askRLineQuestion("You next question to the model: \n")
+        ? await askRLineQuestion("Tu siguiente pregunta al asistente: \n")
         : // this will make the model  build a quiz using our provided function
-          await askRLineQuestion(
-            `Contexto: \n ${context} \n
+          `Contexto: \n ${context} \n
             ${formattedHelpPrompts[chosenOpt - 1]} \n
-            `
-          );
+            `;
 
       // Create a thread
       const thread = await openai.beta.threads.create();
