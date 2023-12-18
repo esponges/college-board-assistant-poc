@@ -160,6 +160,7 @@ async function main() {
         actualRun.status === "requires_action"
       ) {
         // requires_action means that the assistant is waiting for the functions to be added
+        // TODO: We'll certainly need to add functions to the assistant
         if (actualRun.status === "requires_action") {
           // extra single tool call
           const toolCall =
@@ -213,14 +214,14 @@ async function main() {
 
       // Then ask if the user wants to ask another question and update keepAsking state
       const continueAsking = await askRLineQuestion(
-        "Do you want to keep having a conversation? (yes/no) "
+        "¿Deseas continuar con la conversación? (s/n) "
       );
 
-      keepAsking = continueAsking.toLowerCase() === "yes";
+      keepAsking = continueAsking.toLowerCase().startsWith("s");
 
       // If the keepAsking state is falsy show an ending message
       if (!keepAsking) {
-        console.log("Alrighty then, I hope you learned something!\n");
+        console.log("Okay, ¡espero que hayas aprendido algo!\n");
       }
     }
 
