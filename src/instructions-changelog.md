@@ -20,3 +20,7 @@ Use provided functions to interact with the user.
 - Added the `different_wording` function to the model.
 
 > I've noted that the model is returning the exact same response as the input, removing the user prompt where he asks for further explanation to the assistant. For the moment what we could return to the model is clear instructions on how to help the user.
+
+20 Dec
+
+- Added `getHint`, `skipQuestion`, `getAnser` and `dontExist` functions to the model.

@@ -47,3 +47,68 @@ const differentWordings = {
     "required": ["question_text"],
   },
 };
+
+// a function where the student asks for a hint for the question
+
+const getHint = {
+  "name": "get_hint",
+  "description":
+    "Provides a hint to the student.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "hint": { "type": "string",
+      "description": "A hint for the question" },
+  },
+    "required": ["hint"],
+  },
+};
+
+// if the student is stuck on a question and would like to skip it
+
+const skipQuestion = {
+  "name": "skip_question",
+  "description":
+    "Skips the question.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "skip": { "type": "string",
+      "description": "Skips the question" },
+  },
+    "required": ["skip"],
+  },
+};
+
+// if the student wants to get the answer to the question
+
+const getAnswer = {
+  "name": "get_answer",
+  "description":
+    "Provides the answer to the question.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "answer": { "type": "string",
+      "description": "The answer to the question" },
+  },
+    "required": ["answer"],
+  },
+};
+
+// if the student wants to get the answer to the question
+// but we don't want to give it to them
+
+const dontAnswer = {
+  "name": "dont_answer",
+  "description":
+    "Does not provide the answer to the question but provides a hint instead.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "answer": { "type": "string",
+      "description": "Does not provide the answer to the question but provides a hint instead" },
+  },
+    "required": ["answer"],
+  },
+};
