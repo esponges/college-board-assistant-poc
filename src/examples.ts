@@ -112,6 +112,15 @@ export const EXAMPLES: Example[] = [
       },
     ],
   },
+  {
+    type: "math_word_problem",
+    questions: [
+      {
+        text: "Un joven sale de su casa y viaja 12 millas al norte y luego 16 millas al oeste. ¿A cuántas millas se encuentra de su casa?",
+        choices: ["20", "24", "25", "26"],
+      },
+    ],
+  }
 ];
 
 export const formatQuestionForReadline = (

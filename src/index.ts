@@ -86,9 +86,17 @@ async function main() {
       const helpOptChosen = await askRLineQuestion(`
       Elige usando los números la ayuda que necesitas: \n
       ${formattedHelpPrompts.join("")}`);
+
+      const opts = [];
+      for (let i = 1; i <= formattedHelpPrompts.length; i++) {
+        opts.push(i.toString());
+      }
+
       const chosenOpt = parseInt(helpOptChosen, 10);
 
-      if (chosenOpt < 1 || chosenOpt > formattedHelpPrompts.length) {
+      if (!opts.includes(helpOptChosen.trim()[0])) {
+        console.log("Pregunta abierta al asistente \n");
+      } else if (chosenOpt < 1 || chosenOpt > opts.length) {
         console.log("Opción inválida - sólo usa números por favor: \n");
         continue;
       }
