@@ -31,8 +31,9 @@ async function askRLineQuestion(question: string) {
   });
 }
 
-// initial reference for implementation (in Pytho)
+// initial reference for implementation (in Python)
 // https://github.com/openai/openai-cookbook/blob/main/examples/Assistants_API_overview_python.ipynb
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function displayQuiz(title: string, questions: Record<string, string>[]) {
   console.log("Quiz :\n", title);
   const responses = [];
@@ -60,37 +61,7 @@ async function displayQuiz(title: string, questions: Record<string, string>[]) {
   return responses;
 }
 
-// const quizJson = {
-//   name: "display_quiz",
-//   description:
-//     "Displays a quiz to the student, and returns the student's response. A single quiz can have multiple questions.",
-//   parameters: {
-//     type: "object",
-//     properties: {
-//       title: { type: "string" },
-//       questions: {
-//         type: "array",
-//         description:
-//           "An array of questions, each with a title and potentially options (if multiple choice).",
-//         items: {
-//           type: "object",
-//           properties: {
-//             question_text: { type: "string" },
-//             question_type: {
-//               type: "string",
-//               enum: ["MULTIPLE_CHOICE", "FREE_RESPONSE"],
-//             },
-//             choices: { type: "array", items: { type: "string" } },
-//           },
-//           required: ["question_text"],
-//         },
-//       },
-//     },
-//     required: ["title", "questions"],
-//   },
-// };
-
-let isQuizAnswered = false;
+const isQuizAnswered = false;
 
 async function main() {
   try {
@@ -167,21 +138,18 @@ async function main() {
             actualRun.required_action?.submit_tool_outputs?.tool_calls[0];
 
           const name = toolCall?.function.name;
-
+          console.log(`\n$Method to be called: ${name}\n`);
           const args = JSON.parse(toolCall?.function?.arguments || "{}");
-          const questions = args.questions;
+          console.log("\n$Arguments for the function: \n", args);
 
-          const responses = await displayQuiz(name || "cool quiz", questions);
-
-          // toggle flag that sets initial quiz
-          isQuizAnswered = true;
+          const response = { success: true, error: null, result: null };
 
           // we must submit the tool outputs to the run to continue
           await openai.beta.threads.runs.submitToolOutputs(thread.id, run.id, {
             tool_outputs: [
               {
                 tool_call_id: toolCall?.id,
-                output: JSON.stringify(responses),
+                output: JSON.stringify(response),
               },
             ],
           });
