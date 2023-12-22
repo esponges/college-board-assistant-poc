@@ -7,6 +7,7 @@ import {
   formattedHelpPrompts,
 } from "./examples.ts";
 dotenv.config();
+import chalk from "chalk";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -67,7 +68,9 @@ async function main() {
 
     // Log the first greeting
     console.log(
-      "\nHola, soy tu asistente personal para ayudarte a pasar el examen de admisión a la universidad.\n"
+      chalk.greenBright(
+        "\nHola, soy tu asistente personal para ayudarte a pasar el examen de admisión a la universidad.\n"
+      )
     );
 
     // Use keepAsking as state for keep asking questions
@@ -81,7 +84,7 @@ async function main() {
         qn.context
       );
 
-      console.log(`Contexto: \n ${context} \n`);
+      console.log(chalk.blueBright(`Contexto: \n ${context} \n`));
 
       const helpOptChosen = await askRLineQuestion(`
       Elige usando los números la ayuda que necesitas: \n
@@ -95,14 +98,18 @@ async function main() {
       const chosenOpt = parseInt(helpOptChosen, 10);
 
       if (!opts.includes(helpOptChosen.trim()[0])) {
-        console.log("Pregunta abierta al asistente \n");
+        console.log(chalk.greenBright("Pregunta abierta al asistente \n"));
       } else if (chosenOpt < 1 || chosenOpt > opts.length) {
-        console.log("Opción inválida - sólo usa números por favor: \n");
+        console.log(
+          chalk.red("Opción inválida - sólo usa números por favor: \n")
+        );
         continue;
       }
 
       const userQuestion = isQuizAnswered
-        ? await askRLineQuestion("Tu siguiente pregunta al asistente: \n")
+        ? await askRLineQuestion(
+            chalk.greenBright("Tu siguiente pregunta al asistente: \n")
+          )
         : // this will make the model  build a quiz using our provided function
           `Contexto: \n ${context} \n
             ${formattedHelpPrompts[chosenOpt - 1]} \n
