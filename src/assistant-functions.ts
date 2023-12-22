@@ -1,3 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* 
+  FUNCTION CALLING
+
+  The following schemas describe the parameters that are passed to the functions
+  These parameters will be provided by the model and we are responsible for handling them
+  and returning the correct response to the model which will process and return the response to the student
+
+  The flow of the program is as follows:
+  1. The student asks a question
+  2. The model receives the question and figures out what to do with it, it will either:
+    - Answer the question directly
+    - Return an object with the pamarameters and the name of the function that will handle the parameters
+    - We will then call the function with the parameters and return the response to the model with the `submitToolOutputs` function
+    - We will then receive a second with a response regarding what we returned to the model
+*/
+
 const quizJson = {
   name: "display_quiz",
   description:
