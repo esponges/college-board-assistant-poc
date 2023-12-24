@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 import readline from "readline";
 import {
   EXAMPLES,
-  formatQuestionForReadline,
   formattedHelpPrompts,
+  logQuestionsForReadLine,
 } from "./examples.ts";
 dotenv.config();
 import chalk from "chalk";
@@ -78,13 +78,11 @@ async function main() {
 
     while (keepAsking) {
       const qn = EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)];
-      const context = formatQuestionForReadline(
+      const context = logQuestionsForReadLine(
         qn.questions[0].text,
         qn.questions[0].choices,
         qn.context
       );
-
-      console.log(chalk.blueBright(`Contexto: \n ${context} \n`));
 
       const helpOptChosen = await askRLineQuestion(`
       Elige usando los números la ayuda que necesitas: \n

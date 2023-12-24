@@ -40,6 +40,8 @@ Un artículo que cuesta $48.00 tiene un 20 % de descuento. Los clientes que pagu
 A) $38.40 B) $34.56 C) $33.60 D) $3.84
 */
 
+import chalk from "chalk";
+
 type Example = {
   type: "reading_comprehension" | "math_word_problem";
   context?: string;
@@ -120,18 +122,19 @@ export const EXAMPLES: Example[] = [
         choices: ["20", "24", "25", "26"],
       },
     ],
-  }
+  },
 ];
 
-export const formatQuestionForReadline = (
+export const logQuestionsForReadLine = (
   question: string,
   choices: string[],
   context?: string
 ) => {
-  const qn = `${question}\n${choices
-    .map((c, i) => `${i + 1}) ${c}`)
-    .join("\n")}\n`;
-  return context ? `${context}\n${qn}` : qn;
+  const formattedChoices = choices.map((c, i) => `${i + 1}) ${c}`).join("\n");
+
+  if (context) console.log(chalk.blue(context) + "\n\n");
+  console.log(chalk.bgBlueBright(question) + "\n\n");
+  console.log(chalk.blueBright(formattedChoices) + "\n\n");
 };
 
 // if the student doesn't know how to answer the question the model
@@ -143,7 +146,6 @@ export const HELP_PROMPTS = [
   "Explícame cómo responder esta pregunta.",
 ];
 
-export const formattedHelpPrompts = HELP_PROMPTS.map((p, i) => `${i + 1}). ${p}\n`);
-
-
-
+export const formattedHelpPrompts = HELP_PROMPTS.map(
+  (p, i) => `${i + 1}). ${p}\n`
+);
