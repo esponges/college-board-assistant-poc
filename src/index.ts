@@ -4,7 +4,7 @@ import readline from "readline";
 import {
   EXAMPLES,
   formattedHelpPrompts,
-  logQuestionsForReadLine,
+  logQuestionsAndReturnContext,
 } from "./examples.ts";
 dotenv.config();
 import chalk from "chalk";
@@ -78,7 +78,7 @@ async function main() {
 
     while (keepAsking) {
       const qn = EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)];
-      const context = logQuestionsForReadLine(
+      const context = logQuestionsAndReturnContext(
         qn.questions[0].text,
         qn.questions[0].choices,
         qn.context
@@ -86,7 +86,7 @@ async function main() {
 
       const helpOptChosen = await askRLineQuestion(`
       Elige usando los números la ayuda que necesitas: \n
-      ${formattedHelpPrompts.join("")}`);
+      ${formattedHelpPrompts.join("")}\n\n`);
 
       const opts = [];
       for (let i = 1; i <= formattedHelpPrompts.length; i++) {
@@ -186,7 +186,7 @@ async function main() {
           text: { value: string };
         };
 
-        console.log(`${messageValue?.text?.value} \n`);
+        console.log(chalk.bgGreen(`${messageValue?.text?.value} \n`));
       }
 
       // Then ask if the user wants to ask another question and update keepAsking state

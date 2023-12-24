@@ -125,7 +125,7 @@ export const EXAMPLES: Example[] = [
   },
 ];
 
-export const logQuestionsForReadLine = (
+export const logQuestionsAndReturnContext = (
   question: string,
   choices: string[],
   context?: string
@@ -135,6 +135,9 @@ export const logQuestionsForReadLine = (
   if (context) console.log(chalk.blue(context) + "\n\n");
   console.log(chalk.bgBlueBright(question) + "\n\n");
   console.log(chalk.blueBright(formattedChoices) + "\n\n");
+
+  const formatedQnAndChoices = `${context ? context + "\n\n" : ""}${question}\n\n${formattedChoices}\n\n`;
+  return formatedQnAndChoices; 
 };
 
 // if the student doesn't know how to answer the question the model
